@@ -1,7 +1,8 @@
 import request from 'supertest';
 import express from 'express';
-import authRoutes from '../routes/auth.routes';
-import { User } from '../entity/User'; 
+import authRoutes from '../controllers/auth.controller';
+import { User } from '../entity/User';
+import { errorHandler } from '../middlewares/error';
 
 jest.mock('../data-source', () => ({
   userRepository: {
@@ -22,6 +23,7 @@ jest.mock('../utils', () => ({
 const app = express();
 app.use(express.json());
 app.use('/auth', authRoutes);
+app.use(errorHandler);
 
 describe('Auth routes', () => {
   const { userRepository } = require('../data-source');

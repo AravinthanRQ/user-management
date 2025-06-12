@@ -1,6 +1,11 @@
-import "reflect-metadata";
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+} from "typeorm";
 import { Exclude } from "class-transformer";
+import { Image } from "./Image";
 
 @Entity()
 export class User {
@@ -13,4 +18,7 @@ export class User {
   @Exclude()
   @Column()
   password!: string;
+
+  @OneToMany(() => Image, image => image.user)
+  images!: Image[];
 }
